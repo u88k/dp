@@ -1,1 +1,24 @@
 
+import rsa
+
+with open('q7_original_file.txt','rb') as f:
+    realfile = f.read()
+
+realfile
+
+with open('q7_changed_file.txt','rb') as f2:
+    changedfile = f2.read()
+
+changedfile
+
+with open('public_key_file.pem','rb') as puk:
+    public_key=rsa.PublicKey.load_pkcs1(puk.read())
+
+with open('signature_file','rb') as sf:
+    signature_file=sf.read()
+
+verify_file=rsa.verify(realfile,signature_file,public_key)
+
+verify_file
+
+verify_file_1=rsa.verify(changedfile,signature_file,public_key)
