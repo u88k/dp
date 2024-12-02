@@ -1,0 +1,69 @@
+def encrypt(plain_text, shift):
+    if(plain_text == ""):
+        return plain_text
+    else:
+        result = ""
+        for i in plain_text:
+            x = ord(i)
+            if(i.isupper()):
+                y = x-65+shift
+                y = y%26
+                y = y+65
+                result += chr(y)
+            elif(i.islower()):
+                y = x-97+shift
+                y = y%26
+                y = y+97
+                result += chr(y)
+            else:
+                result += i
+                #note that if the character is numerical,space, or special character it will not be changed in this type of encryption technique
+    return result
+
+  def decrypt(cipher_text, shift):
+    if(cipher_text == ""):
+        return cipher_text
+    else:
+        result = ""
+        for i in cipher_text:
+            x = ord(i)
+            if(i.isupper()):
+                y = x-65-shift
+                y = y%26
+                y = y+65
+                result += chr(y)
+            elif(i.islower()):
+                y = x-97-shift
+                y = y%26
+                y = y+97
+                result += chr(y)
+            else:
+                result += i
+    return result
+
+  choice = 0
+
+while (choice!=3):
+    print("\n\n========MENU=========")
+    print("1. Encryption")
+    print("2. Decryption")
+    print("3. Exit")
+    choice = int(input("Enter Choice: "))
+    
+    if(choice == 1):
+        inp = input("Enter Plain Text: ")
+        s = int(input("Enter Shift: "))
+        print("\nPlain Text : " + inp)
+        print("Shift : " + str(s))
+        print("Cipher: " + encrypt(inp,s))
+    elif (choice == 2):
+        inp = input("Enter Cipher Text: ")
+        s = int(input("Enter Shift: "))
+        print("\nCipher Text : " + inp)
+        print("Shift : " + str(s))
+        print("Plain Text: " + decrypt(inp,s))
+    elif(choice == 3):
+        pass
+    else:
+        print("Invalid Choice")
+
