@@ -1,1 +1,57 @@
+def read_txt():
+    result = list()
+    with open ("q4_credentials.txt","r") as f:
+        x = f.readlines()
+    for i in x:
+        L = i.split()
+        L = L[0].split(",")
+        result.append(L)
+    return result
 
+credentials = read_txt()
+credentials
+
+
+import rsa
+def gen_hash(pswd):
+    pswd = pswd.encode('utf-8')
+    hash = rsa.compute_hash(pswd, 'SHA-1').hex()
+    return hash
+
+yo = gen_hash("SourabhPal123")
+print(yo)
+print("length: ",len(yo))
+
+hashed_list = [gen_hash(i[1]).upper() for i in credentials]
+hashed_list
+
+import requests
+def check_password_pwned(test_hash):
+  prefix = test_hash[:5]
+  suffix = test_hash[5:]
+  url = f'https://api.pwnedpasswords.com/range/{prefix}'
+  response = requests.get(url)
+  cnt = 0
+  result = [i.split(":") for i in response.text.splitlines()]
+  for i in result:
+    if i[0] == suffix:
+      cnt += int(i[1])
+
+  return cnt
+
+check_password_pwned('5412DE7EEA5A5BDB374ED15433609C17596B6106')
+
+def main():
+  print("Password checker\n\n")
+  for i in range(len(credentials)):
+    print("USERNAME: ", credentials[i][0])
+    print("ORIGINAL PASSWORD: ", credentials[i][1])
+    x = check_password_pwned(hashed_list[i])
+
+    if x == 0:
+      print("The above password has not been compromised")
+    else:
+      print("The above password has been compromised ", x, " times")
+    print("\n")
+
+main()
