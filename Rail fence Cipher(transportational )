@@ -1,1 +1,109 @@
+def encrypt(plain_text, depth):
+    col = len(plain_text)
+    mat = np.full((depth,col), "")
+    go_down = True
+    x,y = 0,0
+    while(y<col):
+        if(x == depth):
+            go_down = False
+            x -= 2
+        elif(x == -1):
+            go_down = True
+            x += 2
+        else:
+            pass
 
+        if(go_down):
+            mat[x][y] = plain_text[y]
+            x += 1
+        else:
+            mat[x][y] = plain_text[y]
+            x -= 1
+        y+=1
+
+    result = str()
+    for i in range(depth):
+        for j in range(col):
+            if(mat[i][j] != ""):
+                result += mat[i][j]
+
+    return result
+
+def decrypt(cipher_text, depth):
+    col = len(cipher_text)
+    mat = np.full((depth,col), "")
+    go_down = True
+    x,y = 0,0
+    while(y<col):
+        if(x == depth):
+            go_down = False
+            x -= 2
+        elif(x == -1):
+            go_down = True
+            x += 2
+        else:
+            pass
+
+        if(go_down):
+            mat[x][y] = "#"
+            x += 1
+        else:
+            mat[x][y] = "#"
+            x -= 1
+        y+=1
+
+    temp = 0
+    for i in range(depth):
+        for j in range(col):
+            if(mat[i][j] == "#"):
+                mat[i][j] = cipher_text[temp]
+                temp+=1
+
+    result = str()
+    go_down = True
+    x,y = 0,0
+    while(y<col):
+        if(x == depth):
+            go_down = False
+            x -= 2
+        elif(x == -1):
+            go_down = True
+            x += 2
+        else:
+            pass
+
+        if(go_down):
+            result += mat[x][y]
+            x += 1
+        else:
+            result += mat[x][y]
+            x -= 1
+        y+=1
+
+    return result
+
+choice = 0
+
+while (choice!=3):
+    print("\n\n========MENU=========")
+    print("1. Encryption")
+    print("2. Decryption")
+    print("3. Exit")
+    choice = int(input("Enter Choice: "))
+    
+    if(choice == 1):
+        inp = input("\nEnter Plain Text: ")
+        s = int(input("Enter Depth: "))
+        print("\nPlain Text : " + inp)
+        print("Depth : " + str(s))
+        print("Cipher Text: " + encrypt(inp,s))
+    elif (choice == 2):
+        inp = input("\nEnter Cipher Text: ")
+        s = int(input("Enter Depth: "))
+        print("\nCipher Text : " + inp)
+        print("Depth : " + str(s))
+        print("Plain Text: " + decrypt(inp,s))
+    elif(choice == 3):
+        pass
+    else:
+        print("Invalid Choice")
