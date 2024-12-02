@@ -1,1 +1,31 @@
+# METHOD 1 - USING INBUILT FUNCTIONS - RSA LIBRARY
 
+"""
+RSA - RIVEST, SHAMIR, ADLEMAN
+They gave the RSA algorithm, which is a public key encryption technology, used for secure data transmission.
+"""
+
+import rsa
+
+def gen_hash(pswd):
+    pswd = pswd.encode('utf-8')
+    hash = rsa.compute_hash(pswd, 'SHA-256')
+    return hash.hex()
+
+def main():
+    choice = 0
+    while(choice != 2):
+        print("\n\n=============MENU===============\n\
+        1. GENERATE HASH VALUE FOR A PASSWORD\n\
+        2. EXIT")
+        choice = int(input("\nEnter choice: "))
+        if(choice not in (1,2)):
+            print("\nINVALID CHOICE. TRY AGAIN.\n")
+        else:
+            if(choice == 1):
+                x = input("\nEnter Password: ")
+                print("Hash Value generated in hex: ", gen_hash(x))
+            else:
+                break  
+
+main()
